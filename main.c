@@ -72,7 +72,7 @@ void Insert(struct Node** head) {
 
 void DeleteFromFirst(struct Node** head) {
     if (*head == NULL) {
-        printf("List is empty\n");
+        printf("Lista jest pusta\n");
         return;
     }
     struct Node* temp = *head;
@@ -89,7 +89,7 @@ void Delete(struct Node** head) {
     while ( getchar() != '\n' );
 
     if (*head == NULL) {
-        printf("List is empty\n");
+        printf("Lista jest pusta\n");
         return;
     }
     struct Node* temp = *head;
@@ -101,7 +101,7 @@ void Delete(struct Node** head) {
         temp = temp->next;
     }
     if (temp == NULL || temp->next == NULL) {
-        printf("Position out of range\n");
+        printf("Pozycja poza zakresem\n");
         return;
     }
     struct Node* next = temp->next->next;
@@ -148,7 +148,7 @@ void Update(struct Node** head) {
     status[strcspn(status, "\n")] = 0;
 
     if (*head == NULL) {
-        printf("List is empty\n");
+        printf("Lista jest pusta\n");
         return;
     }
     struct Node* temp = *head;
@@ -167,7 +167,7 @@ void Update(struct Node** head) {
     temp = temp->next;
 
     if (temp == NULL || temp->next == NULL) {
-        printf("Position out of range\n");
+        printf("Pozycja poza zakresem\n");
         return;
     }
     strcpy(temp->name, name);
@@ -182,43 +182,84 @@ void Update(struct Node** head) {
 
 void Print(struct Node* head) {
     if (head == NULL){
-        printf("Lista jest pusta");
+        printf("Lista jest pusta\n");
+        return;
     }
-    printf("\n%100s", "Nazwa");
-    printf("%30s", "Pochodzenie");
-    printf("%50s", "Cywilizacja tworcow");
-    printf("%10s", "Poz Zag");
-    printf("%10s", "Rok Odk");
-    printf("%30s", "Satus\n");
+    printf("\n======================================================== KATALOG OBCYCH ARTEFAKTOW ========================================================\n");
+    printf("%-35s", "Nazwa Artefaktu");
+    printf("%-25s", "Pochodzenie");
+    printf("%-30s", "Cywilizacja Tworcow");
+    printf("%-15s", "Zagrozenie");
+    printf("%-15s", "Rok Odkrycia");
+    printf("%-20s", "Status Artefaktu");
+    printf("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
+
     struct Node* temp = head;
+
     while (temp != NULL) {
-        printf("%100s", temp->name);
-        printf("%30s", temp->origin);
-        printf("%50s", temp->creatorCiv);
-        printf( "%10d", temp->dangerLevel);
-        printf( "%10d", temp->discoveryYear);
-        printf("%30s\n", temp->status);
+        printf("%-35s", temp->name);
+        printf("%-25s", temp->origin);
+        printf("%-30s", temp->creatorCiv);
+        printf("%-15d", temp->dangerLevel);
+        printf("%-15d", temp->discoveryYear);
+        printf("%-20s\n", temp->status);
         temp = temp->next;
     }
+    printf("===========================================================================================================================================\n");
 }
+
+
+void InsertData(struct Node** head, char name[], char origin[], char creatorCiv[], int dangerLevel, int discoveryYear, char status[]) {
+    struct Node* newNode = CreateNode(name, origin, creatorCiv, dangerLevel, discoveryYear, status);
+    
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+void TestData(struct Node** head) {
+    InsertData(head, "Krysztal Harmonii", "Kepler-186f", "Thal kari", 1, 2465, "bezpieczny");
+    InsertData(head, "Ostrze Pustki", "Sektor 9", "Nieznana", 10, 2470, "zakazany");
+    InsertData(head, "Chronometr Pradawnych", "Mars", "Prekursorzy", 4, 2399, "w trakcie badan");
+    InsertData(head, "Zarodnik Hivemind", "Xenon Prime", "Roj", 9, 2471, "wymaga kwarantanny");
+    InsertData(head, "Rdzen Energetyczny Mk-IV", "Wrak Stacji Alfa", "Imperium Ludzkosci", 6, 2450, "niestabilny");
+    InsertData(head, "Maska Zlotego Switu", "Proxima Centauri b", "Aurorianie", 0, 2410, "bezpieczny");
+    InsertData(head, "Szepczaca Kula", "Mglawica Oriona", "Nieznana", 8, 2468, "wymaga kwarantanny");
+    InsertData(head, "Tabliczka Gwiezdnych Map", "Ksiezyc Tytan", "Cywilizacja typu II", 2, 2405, "w trakcie badan");
+    InsertData(head, "Generator Osobliwosci", "Sektor Omega", "Zaginieni Architekci", 10, 2471, "zakazany");
+    InsertData(head, "Plynne Lustro", "Gliese 667 Cc", "Wedrowcy", 5, 2460, "niestabilny");
+}
+
+
+
+
 
 int main() {
     struct Node* head = NULL;
     char choice;
     int isRunning = 1;
+
+    //Dodawanie danych testowych
+    TestData(&head);
     
     while(isRunning == 1){
-        printf("\n=== GALAKTYCZNE ARCHIWUM OBCYCH ARTEFAKTOW (Rok 2471) ===\n");
+        printf("\n=== GALAKTYCZNE ARCHIWUM OBCYCH ARTEFAKTOW ===\n");
         printf("1. Rejestracja nowego artefaktu\n");
         printf("2. Wyswietl katalog\n");
         printf("3. Wyszukiwanie\n");
         printf("4. Sortowanie\n");
         printf("5. Edycja danych artefaktu\n");
         printf("6. Usuniecie artefaktu\n");
-        printf("7. Zapisz zmiany do pliku\n");
         printf("0. Wyjscie\n");
-        printf("=========================================================\n");
-        printf("Wybor: ");
+        printf("==============================================\n");
+        printf("Wybór: ");
         choice = fgetc(stdin);
         while ( getchar() != '\n' );
         switch (choice)
@@ -239,13 +280,11 @@ int main() {
         case '6':
             Delete(&head);
             break;
-        case '7':
-            break;
         case '0':
             isRunning = 0;
             break;
         default:
-            printf("Nieprawidlowy wybor\n");
+            printf("Nieprawidłowy wybór\n");
             break;
         }
     }
