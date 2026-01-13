@@ -337,15 +337,117 @@ void InsertData(struct Node** head, char name[], char origin[], char creatorCiv[
 void TestData(struct Node** head) {
     InsertData(head, "Krysztal Harmonii", "Kepler-186f", "Thal kari", 1, 2465, "bezpieczny");
     InsertData(head, "Ostrze Pustki", "Sektor 9", "Nieznana", 10, 2470, "zakazany");
-    InsertData(head, "Chronometr Pradawnych", "Mars", "Prekursorzy", 4, 2399, "w trakcie badan");
-    InsertData(head, "Zarodnik Hivemind", "Xenon Prime", "Roj", 9, 2471, "wymaga kwarantanny");
+    InsertData(head, "Chronometr Pradawnych", "Mars", "Prekursorzy", 2, 2399, "w trakcie badan");
+    InsertData(head, "Zarodnik Hivemind", "Xenon Prime", "Roj", 9, 2470, "wymaga kwarantanny");
     InsertData(head, "Rdzen Energetyczny Mk-IV", "Wrak Stacji Alfa", "Imperium Ludzkosci", 6, 2450, "niestabilny");
     InsertData(head, "Maska Zlotego Switu", "Proxima Centauri b", "Aurorianie", 0, 2410, "bezpieczny");
     InsertData(head, "Szepczaca Kula", "Mglawica Oriona", "Nieznana", 8, 2468, "wymaga kwarantanny");
     InsertData(head, "Tabliczka Gwiezdnych Map", "Ksiezyc Tytan", "Cywilizacja typu II", 2, 2405, "w trakcie badan");
-    InsertData(head, "Generator Osobliwosci", "Sektor Omega", "Zaginieni Architekci", 10, 2471, "zakazany");
+    InsertData(head, "Generator Osobliwosci", "Sektor Omega", "Zaginieni Architekci", 10, 2470, "zakazany");
     InsertData(head, "Plynne Lustro", "Gliese 667 Cc", "Wedrowcy", 5, 2460, "niestabilny");
 }
+
+void Search(struct Node* head, int size) {
+
+    int column;
+    int isFirstIteration = 1;
+    char stringQuery[100];
+    int intQuery;
+
+    printf("\n1. Nazwa Artefaktu\n");
+    printf("2. Pochodzenie\n");
+    printf("3. Cywilizacja Tworcow\n");
+    printf("4. Zagrozenie\n");
+    printf("5. Rok Odkrycia\n");
+    printf("6. Status Artefaktu\n");
+    printf("Wybór: ");
+    column = fgetc(stdin);
+    while ( getchar() != '\n' );
+
+    printf("Podaj dane do wyszukiwania: ");
+    if (column == '4' || column == '5'){
+        scanf("%d", &intQuery);
+        while ( getchar() != '\n' );
+    }
+    else{
+        fgets(stringQuery, sizeof(stringQuery), stdin);
+        stringQuery[strcspn(stringQuery, "\n")] = 0;
+    }
+
+    if (head == NULL){
+        printf("Lista jest pusta\n");
+        return;
+    }
+
+    struct Node* temp = head;
+
+    while (temp != NULL) {
+
+        switch(column){
+            case '1':
+                if (strstr(temp->name, stringQuery) == NULL) {
+                    temp = temp->next;
+                    continue;
+                }
+                break;
+            case '2':
+                if (strstr(temp->origin, stringQuery) == NULL) {
+                    temp = temp->next;
+                    continue;
+                }
+                break;
+            case '3':
+                if (strstr(temp->creatorCiv, stringQuery) == NULL) {
+                    temp = temp->next;
+                    continue;
+                }
+                break;
+            case '4':
+                if (temp->dangerLevel != intQuery) {
+                    temp = temp->next;
+                    continue;
+                }
+                break;
+            case '5':
+                if (temp->discoveryYear != intQuery) {
+                    temp = temp->next;
+                    continue;
+                }
+                break;
+            case '6':
+                if (strstr(temp->status, stringQuery) == NULL) {
+                    temp = temp->next;
+                    continue;
+                }
+                break;
+            default:
+                printf("Nieprawidlowy wybor kolumny.\n");
+                return;
+                break;
+
+        }
+        if(isFirstIteration == 1){
+            printf("\n======================================================== KATALOG OBCYCH ARTEFAKTOW ========================================================\n");
+            printf("%-35s", "Nazwa Artefaktu");
+            printf("%-25s", "Pochodzenie");
+            printf("%-30s", "Cywilizacja Tworcow");
+            printf("%-15s", "Zagrozenie");
+            printf("%-15s", "Rok Odkrycia");
+            printf("%-20s", "Status Artefaktu");
+            printf("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
+            isFirstIteration = 0;
+        }
+
+        printf("%-35s", temp->name);
+        printf("%-25s", temp->origin);
+        printf("%-30s", temp->creatorCiv);
+        printf("%-15d", temp->dangerLevel);
+        printf("%-15d", temp->discoveryYear);
+        printf("%-20s\n", temp->status);
+        temp = temp->next;
+    }
+}
+
 
 
 
@@ -355,9 +457,11 @@ int main() {
     struct Node* head = NULL;
     char choice;
     int isRunning = 1;
+    int size = 0;
 
     //Dodawanie danych testowych
     TestData(&head);
+    size = 10;
     
     while(isRunning == 1){
         printf("\n=== GALAKTYCZNE ARCHIWUM OBCYCH ARTEFAKTOW ===\n");
@@ -376,11 +480,13 @@ int main() {
         switch (choice) {
             case '1':
                 Insert(&head);
+                size++;
                 break;
             case '2':
                 Print(head);
                 break;
             case '3':
+                Search(head, size);
                 break;
             case '4':
                 Sort(head);
