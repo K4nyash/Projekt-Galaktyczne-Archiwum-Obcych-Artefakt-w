@@ -448,6 +448,44 @@ void Search(struct Node* head, int size) {
     }
 }
 
+void SaveToFile(struct Node* head) {
+    FILE *file = fopen("baza.txt", "w");
+    if (file == NULL) {
+        printf("Blad otwarcia pliku do zapisu\n");
+        return;
+    }
+    struct Node* temp = head;
+    while (temp != NULL) {
+        fprintf(file, "%s;%s;%s;%d;%d;%s\n", temp->name, temp->origin, temp->creatorCiv, temp->dangerLevel, temp->discoveryYear, temp->status);
+        temp = temp->next;
+    }
+    fclose(file);
+    printf("Zapisano dane do pliku baza.txt\n");
+}
+
+void LoadFromFile(struct Node** head) {
+    FILE *file = fopen("baza.txt", "r");
+    if (file == NULL) {
+        printf("Blad otwarcia pliku do odczytu lub plik nie istnieje\n");
+        return;
+    }
+    char buffer[512];
+    while (fgets(buffer, sizeof(buffer), file)) {
+        buffer[strcspn(buffer, "\n")] = 0;
+        char *name = strtok(buffer, ";");
+        char *origin = strtok(NULL, ";");
+        char *creatorCiv = strtok(NULL, ";");
+        char *dangerStr = strtok(NULL, ";");
+        char *yearStr = strtok(NULL, ";");
+        char *status = strtok(NULL, ";");
+
+        if (name && origin && creatorCiv && dangerStr && yearStr && status) {
+            InsertData(head, name, origin, creatorCiv, atoi(dangerStr), atoi(yearStr), status);
+        }
+    }
+    fclose(file);
+    printf("Wczytano dane z pliku baza.txt\n");
+}
 
 
 
@@ -471,6 +509,8 @@ int main() {
         printf("4. Sortowanie\n");
         printf("5. Edycja danych artefaktu\n");
         printf("6. Usuniecie artefaktu\n");
+        printf("7. Zapis do pliku\n");
+        printf("8. Odczyt z pliku\n");        
         printf("0. Wyjscie\n");
         printf("==============================================\n");
         printf("Wybór: ");
@@ -497,6 +537,12 @@ int main() {
             case '6':
                 Delete(&head);
                 break;
+            case '7':
+                SaveToFile(head);
+                break;
+            case '8':
+                LoadFromFile(&head);
+                break;    
             case '0':
                 isRunning = 0;
                 break;
