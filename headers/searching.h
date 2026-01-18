@@ -1,0 +1,1 @@
+void Search(struct Node* head, int size);
