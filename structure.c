@@ -47,19 +47,21 @@ void Insert(struct Node** head) {
     creatorCiv[strcspn(creatorCiv, "\n")] = 0;
 
     printf("Podaj poziom zagrozenia artefaktu: ");
-    while (scanf("%d", &dangerLevel) != 1) {
-        printf("Bledne dane!\n");
-        while ( getchar() != '\n' );
-        return;
+    while(1) {
+        if (scanf("%d", &dangerLevel) != 1) {
+            printf("Bledne dane! Sprobuj ponownie: ");
+            while ( getchar() != '\n' );
+        } else if (dangerLevel < 0 || dangerLevel > 10) {
+            printf("Bledny zakres! Sprobuj ponownie: ");
+        } else {
+            break;
+        }
     }
-    while ( getchar() != '\n' );
 
     printf("Podaj rok odkrycia artefaktu: ");
-    scanf("%d", &discoveryYear);
     while (scanf("%d", &discoveryYear) != 1) {
-        printf("Bledne dane!\n");
+        printf("Bledne dane! Sprobuj ponownie: ");
         while ( getchar() != '\n' );
-        return;
     }
     while ( getchar() != '\n' );
 
@@ -174,19 +176,21 @@ void Update(struct Node** head) {
     creatorCiv[strcspn(creatorCiv, "\n")] = 0;
 
     printf("Podaj poziom zagrozenia artefaktu: ");
-    while (scanf("%d", &dangerLevel) != 1) {
-        printf("Bledne dane!\n");
-        while ( getchar() != '\n' );
-        return;
+    while(1) {
+        if (scanf("%d", &dangerLevel) != 1) {
+            printf("Bledne dane! Sprobuj ponownie: ");
+            while ( getchar() != '\n' );
+        } else if (dangerLevel < 0 || dangerLevel > 10) {
+            printf("Bledny zakres! Sprobuj ponownie: ");
+        } else {
+            break;
+        }
     }
-    while ( getchar() != '\n' );
-
 
     printf("Podaj rok odkrycia artefaktu: ");
     while (scanf("%d", &discoveryYear) != 1) {
-        printf("Bledne dane!\n");
+        printf("Bledne dane! Sprobuj ponownie: ");
         while ( getchar() != '\n' );
-        return;
     }
     while ( getchar() != '\n' );
 

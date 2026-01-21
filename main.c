@@ -8,6 +8,12 @@
 #include "headers/searching.h"
 #include "headers/fileHandling.h"
 
+/*
+  GitHub:
+https://github.com/K4nyash/Projekt-Galaktyczne-Archiwum-Obcych-Artefakt-w
+*/
+
+
 int main() {
     struct Node* head = NULL;
     char choice;
