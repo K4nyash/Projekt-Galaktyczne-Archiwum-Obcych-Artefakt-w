@@ -12,7 +12,7 @@
 void TestData(struct Node** head) {
     InsertData(head, "Krysztal Harmonii", "Kepler-186f", "Thal kari", 1, 2465, "bezpieczny");
     InsertData(head, "Ostrze Pustki", "Sektor 9", "Nieznana", 10, 2470, "zakazany");
-    InsertData(head, "Chronometr Pradawnych", "Mars", "Prekursorzy", 2, 2399, "w trakcie badan");
+    InsertData(head, "Chronometr pradawnych", "Mars", "Prekursorzy", 2, 2399, "w trakcie badan");
     InsertData(head, "Zarodnik Hivemind", "Xenon Prime", "Roj", 9, 2470, "wymaga kwarantanny");
     InsertData(head, "Rdzen Energetyczny Mk-IV", "Wrak Stacji Alfa", "Imperium Ludzkosci", 6, 2450, "niestabilny");
     InsertData(head, "Maska Zlotego Switu", "Proxima Centauri b", "Aurorianie", 0, 2410, "bezpieczny");
@@ -44,7 +44,7 @@ int main() {
         printf("8. Odczyt z pliku\n");        
         printf("0. Wyjscie\n");
         printf("==============================================\n");
-        printf("Wybór: ");
+        printf("Wybor: ");
         choice = fgetc(stdin);
         while ( getchar() != '\n' );
 
@@ -78,7 +78,7 @@ int main() {
                 isRunning = 0;
                 break;
             default:
-                printf("Nieprawidłowy wybór\n");
+                printf("Nieprawidlowy wybor\n");
                 break;
         }
     }

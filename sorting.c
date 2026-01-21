@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "headers/structure.h"
 
@@ -12,7 +13,7 @@ void SwapNodes(struct Node *a, struct Node *b) {
     char tempStatus[30];
     int tempDanger;
     int tempYear;
-
+    
     strcpy(tempName, a->name);
     strcpy(tempOrigin, a->origin);
     strcpy(tempCreator, a->creatorCiv);
@@ -35,9 +36,24 @@ void SwapNodes(struct Node *a, struct Node *b) {
     strcpy(b->status, tempStatus);
 }
 
+int FormatCharacters(const char *name1, const char *name2) {
+    while (*name1 && *name2) {
+        char letter1 = tolower((char)*name1);
+        char letter2 = tolower((char)*name2);
+    
+        if (letter1 != letter2) {
+            return letter1 - letter2;
+        }
+
+        name1++;
+        name2++;
+    }
+    return tolower((char)*name1) - tolower((char)*name2);
+}
+
 void Sort(struct Node *head) {
     if (head == NULL) {
-        printf("Lista jest pusta, nie można posortować\n");
+        printf("Lista jest pusta, nie mozna posortowac\n");
         return;
     }
 
@@ -45,17 +61,17 @@ void Sort(struct Node *head) {
     printf("\n===== OPCJE SORTOWANIA =====\n");
     printf("1. Po Nazwie Artefaktu\n");
     printf("2. Po Pochodzeniu\n");
-    printf("3. Po Cywilizacji Tworców\n");
+    printf("3. Po Cywilizacji Tworcow\n");
     printf("4. Po Poziomie Zagrozenia\n");
     printf("5. Po Roku Odkrycia \n");
     printf("6. Po Statusie Artefaktu\n");
     printf("============================\n");
-    printf("Wybór: ");
+    printf("Wybor: ");
     scanf("%d", &sortChoice);
     while (getchar() != '\n');
 
     if (sortChoice < 1 || sortChoice > 6) {
-        printf("Nieprawidlowy wybór sortowania\n");
+        printf("Nieprawidlowy wybor sortowania\n");
         return;
     }
 
@@ -72,17 +88,17 @@ void Sort(struct Node *head) {
 
             switch (sortChoice) {
                 case 1:
-                    if (strcmp(currentNode->name, currentNode->next->name) > 0) {
+                    if (FormatCharacters(currentNode->name, currentNode->next->name) > 0) {
                         shouldSwap = 1;
                     }
                     break;
                 case 2:
-                    if (strcmp(currentNode->origin, currentNode->next->origin) > 0) {
+                    if (FormatCharacters(currentNode->origin, currentNode->next->origin) > 0) {
                         shouldSwap = 1;
                     }
                     break;
                 case 3:
-                    if (strcmp(currentNode->creatorCiv, currentNode->next->creatorCiv) > 0) {
+                    if (FormatCharacters(currentNode->creatorCiv, currentNode->next->creatorCiv) > 0) {
                         shouldSwap = 1;
                     }
                     break;
@@ -97,7 +113,7 @@ void Sort(struct Node *head) {
                     }
                     break;
                 case 6:
-                    if (strcmp(currentNode->status, currentNode->next->status) > 0) {
+                    if (FormatCharacters(currentNode->status, currentNode->next->status) > 0) {
                         shouldSwap = 1;
                     }
                     break;
@@ -113,5 +129,5 @@ void Sort(struct Node *head) {
 
     } while (swapped == 1);
 
-    printf("Archiwum zostało posortowane\n");
+    printf("Archiwum zostalo posortowane\n");
 }

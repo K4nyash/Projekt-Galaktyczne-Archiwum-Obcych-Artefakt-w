@@ -18,7 +18,7 @@ void Search(struct Node* head, int size) {
     printf("4. Zagrozenie\n");
     printf("5. Rok Odkrycia\n");
     printf("6. Status Artefaktu\n");
-    printf("Wybór: ");
+    printf("Wybor: ");
     column = fgetc(stdin);
     while ( getchar() != '\n' );
 
