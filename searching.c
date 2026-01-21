@@ -11,16 +11,31 @@ void Search(struct Node* head, int size) {
     int isFirstIteration = 1;
     char stringQuery[100];
     int intQuery;
+    char correctColumns[7] = "123456";
+    int isCorrectColumn = 0;
 
-    printf("\n1. Nazwa Artefaktu\n");
+    printf("\n===== OPCJE WYSZUKIWANIA =====\n");
+    printf("1. Nazwa Artefaktu\n");
     printf("2. Pochodzenie\n");
     printf("3. Cywilizacja Tworcow\n");
     printf("4. Zagrozenie\n");
     printf("5. Rok Odkrycia\n");
     printf("6. Status Artefaktu\n");
+    printf("==============================\n");
     printf("Wybor: ");
     column = fgetc(stdin);
     while ( getchar() != '\n' );
+
+    for (int i=0; i<6; i++){
+        if(column == correctColumns[i]){
+            isCorrectColumn = 1;
+            break;
+        }
+    }
+    if(isCorrectColumn == 0){
+        printf("Nieprawidlowy wybor kolumny.\n");
+        return;
+    }
 
     printf("Podaj dane do wyszukiwania: ");
     if (column == '4' || column == '5'){

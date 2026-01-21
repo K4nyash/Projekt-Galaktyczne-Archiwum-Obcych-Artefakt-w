@@ -1,2 +1,2 @@
 void SaveToFile(struct Node* head);
-void LoadFromFile(struct Node** head);
+int LoadFromFile(struct Node** head);

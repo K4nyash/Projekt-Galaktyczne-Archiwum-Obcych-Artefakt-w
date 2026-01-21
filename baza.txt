@@ -1,0 +1,10 @@
+Krysztal Harmonii;Kepler-186f;Thal kari;1;2465;bezpieczny
+Ostrze Pustki;Sektor 9;Nieznana;10;2470;zakazany
+Chronometr pradawnych;Mars;Prekursorzy;2;2399;w trakcie badan
+Zarodnik Hivemind;Xenon Prime;Roj;9;2470;wymaga kwarantanny
+Rdzen Energetyczny Mk-IV;Wrak Stacji Alfa;Imperium Ludzkosci;6;2450;niestabilny
+Maska Zlotego Switu;Proxima Centauri b;Aurorianie;0;2410;bezpieczny
+Szepczaca Kula;Mglawica Oriona;Nieznana;8;2468;wymaga kwarantanny
+Tabliczka Gwiezdnych Map;Ksiezyc Tytan;Cywilizacja typu II;2;2405;w trakcie badan
+Generator Osobliwosci;Sektor Omega;Zaginieni Architekci;10;2470;zakazany
+Plynne Lustro;Gliese 667 Cc;Wedrowcy;5;2460;niestabilny

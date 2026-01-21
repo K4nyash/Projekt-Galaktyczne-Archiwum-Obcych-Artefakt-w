@@ -33,6 +33,7 @@ void Insert(struct Node** head) {
     int discoveryYear;
     char status[100];
 
+    printf("\n======== DODAWANIE ARTEFAKTU ========\n");
     printf("Podaj nazwe artefaktu: ");
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = 0;
@@ -46,11 +47,20 @@ void Insert(struct Node** head) {
     creatorCiv[strcspn(creatorCiv, "\n")] = 0;
 
     printf("Podaj poziom zagrozenia artefaktu: ");
-    scanf("%d", &dangerLevel);
+    while (scanf("%d", &dangerLevel) != 1) {
+        printf("Bledne dane!\n");
+        while ( getchar() != '\n' );
+        return;
+    }
     while ( getchar() != '\n' );
 
     printf("Podaj rok odkrycia artefaktu: ");
     scanf("%d", &discoveryYear);
+    while (scanf("%d", &discoveryYear) != 1) {
+        printf("Bledne dane!\n");
+        while ( getchar() != '\n' );
+        return;
+    }
     while ( getchar() != '\n' );
 
     printf("Podaj status artefaktu: ");
@@ -100,7 +110,8 @@ void Delete(struct Node** head) {
 
     int position;
 
-    printf("Podaj pozycje do usuniecia: ");
+    printf("\n===== OPCJE USUWANIA =====\n");
+    printf("Podaj indeks do usuniecia: ");
     scanf("%d", &position);
     while ( getchar() != '\n' );
 
@@ -110,14 +121,23 @@ void Delete(struct Node** head) {
     }
     struct Node* temp = *head;
     if (position == 0) {
-        DeleteFromFirst(head);
+        if(temp->dangerLevel < 8){
+            DeleteFromFirst(head);
+        }
+        else{
+            printf("Poziom zagrozenia tego artefaktu jest zbyt wysoki");
+        }
         return;
     }
     for (int i = 0; temp != NULL && i < position - 1; i++) {
         temp = temp->next;
     }
     if (temp == NULL || temp->next == NULL) {
-        printf("Pozycja poza zakresem\n");
+        printf("Indeks poza zakresem\n");
+        return;
+    }
+    if(temp->dangerLevel >= 8){
+        printf("Poziom zagrozenia tego artefaktu jest zbyt wysoki");
         return;
     }
     struct Node* next = temp->next->next;
@@ -135,7 +155,9 @@ void Update(struct Node** head) {
     int discoveryYear;
     char status[100];
 
-    printf("Podaj pozycje do zmiany: ");
+    printf("\n======== OPCJE EDYTOWANIA ========\n");
+    
+    printf("Podaj indeks do zmiany: ");
     scanf("%d", &position);
     while ( getchar() != '\n' );
 
@@ -152,12 +174,22 @@ void Update(struct Node** head) {
     creatorCiv[strcspn(creatorCiv, "\n")] = 0;
 
     printf("Podaj poziom zagrozenia artefaktu: ");
-    scanf("%d", &dangerLevel);
+    while (scanf("%d", &dangerLevel) != 1) {
+        printf("Bledne dane!\n");
+        while ( getchar() != '\n' );
+        return;
+    }
     while ( getchar() != '\n' );
 
+
     printf("Podaj rok odkrycia artefaktu: ");
-    scanf("%d", &discoveryYear);
+    while (scanf("%d", &discoveryYear) != 1) {
+        printf("Bledne dane!\n");
+        while ( getchar() != '\n' );
+        return;
+    }
     while ( getchar() != '\n' );
+
 
     printf("Podaj status artefaktu: ");
     fgets(status, sizeof(status), stdin);
@@ -183,7 +215,7 @@ void Update(struct Node** head) {
     temp = temp->next;
 
     if (temp == NULL || temp->next == NULL) {
-        printf("Pozycja poza zakresem\n");
+        printf("Indeks poza zakresem\n");
         return;
     }
     strcpy(temp->name, name);

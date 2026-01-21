@@ -20,11 +20,13 @@ void SaveToFile(struct Node* head) {
     printf("Zapisano dane do pliku baza.txt\n");
 }
 
-void LoadFromFile(struct Node** head) {
+int LoadFromFile(struct Node** head) {
     FILE *file = fopen("baza.txt", "r");
+    int size = 0;
+
     if (file == NULL) {
         printf("Blad otwarcia pliku do odczytu lub plik nie istnieje\n");
-        return;
+        return 0;
     }
     char buffer[512];
     while (fgets(buffer, sizeof(buffer), file)) {
@@ -38,8 +40,10 @@ void LoadFromFile(struct Node** head) {
 
         if (name && origin && creatorCiv && dangerStr && yearStr && status) {
             InsertData(head, name, origin, creatorCiv, atoi(dangerStr), atoi(yearStr), status);
+            size++;
         }
     }
     fclose(file);
     printf("Wczytano dane z pliku baza.txt\n");
+    return size;
 }
